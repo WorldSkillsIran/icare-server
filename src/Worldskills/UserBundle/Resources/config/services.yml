@@ -1,0 +1,6 @@
+services:
+  hwi_oauth.user.provider.entity:
+    class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider
+  worldskills_user.oauth_user_provider:
+    class: Worldskills\UserBundle\Auth\OAuthProvider
+    arguments: [@session, @doctrine, @service_container]

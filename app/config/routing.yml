@@ -1,0 +1,27 @@
+worldskills_user:
+    resource: "@WorldskillsUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+worldskills_care:
+    resource: "@WorldskillsCareBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /login
+
+facebook_login:
+    pattern: /login/check-facebook
+
+google_login:
+    pattern: /login/check-google
+
+custom_login:
+    pattern: /login/check-twitter
