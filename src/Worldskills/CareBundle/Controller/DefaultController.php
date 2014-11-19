@@ -1,21 +1,29 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: worldskill
+ * Date: 11/18/14
+ * Time: 3:42 AM
+ */
 
 namespace Worldskills\CareBundle\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends FOSRestController
-{
+/**
+ * Class DefaultController
+ * @package Worldskills\CareBundle\Controller
+ * @Route("/")
+ */
+class DefaultController extends Controller {
+
     /**
-     * @Route("/hello/{name}")
-     * @Template()
+     * @Route("/")
      */
-    public function indexAction($name)
-    {
-        $topTen = $this->getDoctrine()->getRepository('WorldskillsCareBundle:Subject')->getHottest(10);
-
-        return array('topTen' => $topTen);
+    public function indexAction() {
+        return new Response("This is iCare");
     }
-}
+} 

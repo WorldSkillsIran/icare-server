@@ -5,13 +5,12 @@ namespace Worldskills\CareBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Options
+ * Tip
  *
  * @ORM\Table()
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  */
-class Options
+class Tip
 {
     /**
      * @var integer
@@ -30,18 +29,18 @@ class Options
     private $title;
 
     /**
-     * @var
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="Subject")
+     * @ORM\Column(name="datetime", type="datetime")
      */
-    private $subject;
+    private $datetime;
 
     /**
      * @var
      *
-     * @ORM\ManyToOne(targetEntity="VoteThread")
+     * @ORM\ManyToOne(targetEntity="Worldskills\CareBundle\Entity\Subject")
      */
-    private $voteThread;
+    private $subject;
 
     /**
      * @var
@@ -50,9 +49,6 @@ class Options
      */
     private $user;
 
-    public function __construct() {
-        $this->datetime = new \DateTime();
-    }
 
     /**
      * Get id
@@ -68,7 +64,7 @@ class Options
      * Set title
      *
      * @param string $title
-     * @return Options
+     * @return Tip
      */
     public function setTitle($title)
     {
@@ -88,10 +84,33 @@ class Options
     }
 
     /**
+     * Set datetime
+     *
+     * @param \DateTime $datetime
+     * @return Tip
+     */
+    public function setDatetime($datetime)
+    {
+        $this->datetime = $datetime;
+
+        return $this;
+    }
+
+    /**
+     * Get datetime
+     *
+     * @return \DateTime 
+     */
+    public function getDatetime()
+    {
+        return $this->datetime;
+    }
+
+    /**
      * Set subject
      *
      * @param \Worldskills\CareBundle\Entity\Subject $subject
-     * @return Options
+     * @return Tip
      */
     public function setSubject(\Worldskills\CareBundle\Entity\Subject $subject = null)
     {
@@ -111,40 +130,10 @@ class Options
     }
 
     /**
-     * Set voteThread
-     *
-     * @param \Worldskills\CareBundle\Entity\VoteThread $voteThread
-     * @return Options
-     */
-    public function setVoteThread(\Worldskills\CareBundle\Entity\VoteThread $voteThread = null)
-    {
-        $this->voteThread = $voteThread;
-
-        return $this;
-    }
-
-    /**
-     * Get voteThread
-     *
-     * @return \Worldskills\CareBundle\Entity\VoteThread 
-     */
-    public function getVoteThread()
-    {
-        return $this->voteThread;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function addVoteThread() {
-        $this->voteThread = new VoteThread();
-    }
-
-    /**
      * Set user
      *
      * @param \Worldskills\UserBundle\Entity\User $user
-     * @return Options
+     * @return Tip
      */
     public function setUser(\Worldskills\UserBundle\Entity\User $user = null)
     {

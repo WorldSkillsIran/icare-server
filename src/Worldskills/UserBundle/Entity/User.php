@@ -1,6 +1,6 @@
 <?php
 
-namespace Foggyline\Bundle\TickerBundle\Entity;
+namespace Worldskills\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -14,7 +14,7 @@ use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUser;
  * User
  *
  * @ORM\Table(name="user")
- * @ORM\Entity()
+ * @ORM\Entity
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  */
@@ -37,7 +37,7 @@ class User extends OAuthUser implements EquatableInterface, \Serializable
     protected $googleId;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Foggyline\Bundle\TickerBundle\Entity\Role", inversedBy="users")
+     * @ORM\Column(type="array")
      *
      */
     protected $roles;
@@ -192,17 +192,12 @@ class User extends OAuthUser implements EquatableInterface, \Serializable
 
     public function getRoles()
     {
-        return $this->roles->toArray();
-    }
-
-    public function getRolesAsCollection()
-    {
         return $this->roles;
     }
 
-    public function setRoles($role)
+    public function addRole($role)
     {
-        return $this->roles->add($role);
+        return $this->roles[] = $role;
     }
 
     /**
@@ -407,5 +402,18 @@ class User extends OAuthUser implements EquatableInterface, \Serializable
         }
 
         return false;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }

@@ -53,6 +53,12 @@ class VoteThread
         return $this->id;
     }
 
+    public function __construct() {
+        $this->setDown(0);
+        $this->setUp(0);
+        $this->setTotal(0);
+    }
+
     /**
      * Set total
      *
@@ -120,5 +126,21 @@ class VoteThread
     public function getDown()
     {
         return $this->down;
+    }
+
+    /**
+     * Add a value
+     *
+     * @param integer $value
+     * @return void
+     */
+    public function addValue($value) {
+        if($value == 1) {
+            $this->setUp($this->getUp() + 1);
+            $this->setTotal($this->getTotal() + 1);
+        } elseif($value == -1) {
+            $this->setDown($this->getUp() + 1);
+            $this->setTotal($this->getTotal() - 1);
+        }
     }
 }

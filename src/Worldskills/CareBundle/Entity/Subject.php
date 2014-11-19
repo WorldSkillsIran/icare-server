@@ -3,12 +3,14 @@
 namespace Worldskills\CareBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Worldskills\UserBundle\Entity\User;
 
 /**
  * Subject
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Worldskills\CareBundle\Entity\SubjectRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Subject
 {
@@ -36,17 +38,46 @@ class Subject
     private $datetime;
 
     /**
-     * @var
+     * @var VoteThread
      *
      * @ORM\ManyToOne(targetEntity="VoteThread")
      */
     private $voteThread;
 
+    /**
+     * @var Tag
+     *
+     * @ORM\ManyToMany(targetEntity="Worldskills\CareBundle\Entity\Tag")
+     */
+    private $tags;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Worldskills\UserBundle\Entity\User")
+     */
+    private $user;
+
+    /**
+     * @var Options[]
+     *
+     * @ORM\OneToMany(targetEntity="Worldskills\CareBundle\Entity\Options")
+     */
+    private $options;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->datetime = new \DateTime();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -69,7 +100,7 @@ class Subject
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -92,10 +123,96 @@ class Subject
     /**
      * Get datetime
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDatetime()
     {
         return $this->datetime;
+    }
+
+    /**
+     * Set voteThread
+     *
+     * @param \Worldskills\CareBundle\Entity\VoteThread $voteThread
+     * @return Subject
+     */
+    public function setVoteThread(\Worldskills\CareBundle\Entity\VoteThread $voteThread = null)
+    {
+        $this->voteThread = $voteThread;
+
+        return $this;
+    }
+
+    /**
+     * Get voteThread
+     *
+     * @return \Worldskills\CareBundle\Entity\VoteThread
+     */
+    public function getVoteThread()
+    {
+        return $this->voteThread;
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \Worldskills\CareBundle\Entity\Tag $tags
+     * @return Subject
+     */
+    public function addTag(\Worldskills\CareBundle\Entity\Tag $tags)
+    {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \Worldskills\CareBundle\Entity\Tag $tags
+     */
+    public function removeTag(\Worldskills\CareBundle\Entity\Tag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Worldskills\UserBundle\Entity\User $user
+     * @return Subject
+     */
+    public function setUser(\Worldskills\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Worldskills\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function addVoteThread() {
+        $this->voteThread = new VoteThread();
     }
 }

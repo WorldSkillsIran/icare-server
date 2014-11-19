@@ -17,7 +17,7 @@ class SubjectRepository extends EntityRepository
             ->getEntityManager()
             ->getRepository('WorldskillsCareBundle:Subject')
             ->createQueryBuilder('s')
-            ->orderBy('id', 'desc')
+            ->orderBy('s.id', 'desc')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
