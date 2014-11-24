@@ -23,5 +23,13 @@ facebook_login:
 google_login:
     pattern: /login/check-google
 
-custom_login:
+twitter_login:
     pattern: /login/check-twitter
+
+subjects:
+    type:     rest
+    resource: Worldskills\CareBundle\Controller\SubjectRestController
+
+users:
+    type:     rest
+    resource: Worldskills\UserBundle\Controller\UserRestController

@@ -70,3 +70,16 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+hwi_oauth:
+    firewall_name: main
+    resource_owners:
+        google:
+            type:                google
+            client_id:           909213562712-07v403rln88g8rige2fcejhink30oeor.apps.googleusercontent.com
+            client_secret:       IZAMFeLlouS8o4zVWakKJihx
+            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+
+fos_rest:
+    routing_loader:
+        default_format: json

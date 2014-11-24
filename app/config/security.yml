@@ -21,32 +21,24 @@ security:
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        # the login page has to be accessible for everybody
-        demo_login:
-            pattern:  ^/demo/secured/login$
-            security: false
-
-        # secures part of the application
-        demo_secured_area:
-            pattern:    ^/demo/secured/
-            # it's important to notice that in this case _demo_security_check and _demo_login
-            # are route names and that they are specified in the AcmeDemoBundle
-            form_login:
-                check_path: _demo_security_check
-                login_path: _demo_login
+        main:
+            pattern: ^/
+            anonymous: true
+            logout: true
             logout:
-                path:   _demo_logout
-                target: _demo
+                path:   /logout
+                target: /
+            oauth:
+                resource_owners:
+                    google: "/login/check-google"
+                login_path: /login
+                failure_path: /login
+                oauth_user_provider:
+                    service: worldskills_user.oauth_user_provider
+                failure_path:      /login
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
-
-    # with these settings you can restrict or allow access for different parts
-    # of your application based on roles, ip, host or methods
-    # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
-    access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
