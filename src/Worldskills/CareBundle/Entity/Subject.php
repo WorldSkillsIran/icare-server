@@ -4,11 +4,11 @@ namespace Worldskills\CareBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Worldskills\UserBundle\Entity\User;
-
+//indexes={@ORM\Index(columns={"title"}, flags={"fulltext"})}
 /**
  * Subject
  *
- * @ORM\Table()
+ * @ORM\Table(name="subject")
  * @ORM\Entity(repositoryClass="Worldskills\CareBundle\Entity\SubjectRepository")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -40,7 +40,7 @@ class Subject
     /**
      * @var VoteThread
      *
-     * @ORM\ManyToOne(targetEntity="VoteThread")
+     * @ORM\OneToOne(targetEntity="VoteThread")
      */
     private $voteThread;
 
@@ -61,9 +61,11 @@ class Subject
     /**
      * @var Options[]
      *
-     * @ORM\OneToMany(targetEntity="Worldskills\CareBundle\Entity\Options")
+     * @ORM\OneToMany(targetEntity="Worldskills\CareBundle\Entity\Options", mappedBy="subject")
      */
     private $options;
+
+    private $score;
 
     /**
      * Constructor
@@ -214,5 +216,14 @@ class Subject
      */
     public function addVoteThread() {
         $this->voteThread = new VoteThread();
+    }
+
+    /**
+     * Get The score of this subject in a collection
+     *
+     * @return mixed
+     */
+    public function getScore() {
+        return $this->score;
     }
 }

@@ -47,4 +47,8 @@ class SubjectRestController extends FOSRestController
         return $this->handleView($view);
     }
 
+    public function putOptionsAction(Request $request) {
+
+    }
+
 }

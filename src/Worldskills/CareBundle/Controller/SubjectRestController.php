@@ -59,4 +59,13 @@ class SubjectRestController extends FOSRestController
         return $this->handleView($view);
     }
 
+
+    public function getSubjectKeywordsAction($keywords)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $subjects = $em->getRepository('WorldskillsCareBundle:Subject')->queryTitle($keywords);
+        $view = $this->view($subjects);
+        return $this->handleView($view);
+    }
+
 }

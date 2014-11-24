@@ -3,7 +3,7 @@
 namespace Worldskills\CareBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-
+use Worldskills\CareBundle\Entity\Subject;
 /**
  * SubjectRepository
  *
@@ -12,7 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class SubjectRepository extends EntityRepository
 {
-    public function getHottest($limit = 10) {
+    public function getHottest($limit = 10)
+    {
         return $this
             ->getEntityManager()
             ->getRepository('WorldskillsCareBundle:Subject')
@@ -21,5 +22,24 @@ class SubjectRepository extends EntityRepository
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
+    }
+
+    public function queryTitle($keywords, $limit = 10)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->getConnection()
+            ->createQueryBuilder()
+            ->addSelect('*')
+            ->addSelect('MATCH(s.title) AGAINST (:keywords IN NATURAL LANGUAGE MODE) AS score')
+            ->from('subject', 's')
+//            ->where('score > 0')
+            ->setParameter('keywords', $keywords)
+            ->setMaxResults($limit)
+            ->orderBy('score', 'DESC');
+
+        return $query
+            ->execute()
+            ->fetchAll(\PDO::FETCH_CLASS, "Worldskills\\CareBundle\\Entity\\Subject");
     }
 }
