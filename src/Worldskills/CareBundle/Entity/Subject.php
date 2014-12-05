@@ -4,6 +4,7 @@ namespace Worldskills\CareBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Worldskills\UserBundle\Entity\User;
+
 //indexes={@ORM\Index(columns={"title"}, flags={"fulltext"})}
 /**
  * Subject
@@ -204,7 +205,7 @@ class Subject
     /**
      * Get user
      *
-     * @return \Worldskills\UserBundle\Entity\User 
+     * @return \Worldskills\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -214,7 +215,8 @@ class Subject
     /**
      * @ORM\PrePersist()
      */
-    public function addVoteThread() {
+    public function addVoteThread()
+    {
         $this->voteThread = new VoteThread();
     }
 
@@ -223,7 +225,8 @@ class Subject
      *
      * @return mixed
      */
-    public function getScore() {
+    public function getScore()
+    {
         return $this->score;
     }
 }

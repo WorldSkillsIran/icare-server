@@ -21,8 +21,8 @@ security:
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
     firewalls:
-        main:
-            pattern: ^/
+        admin:
+            pattern: ^/admin
             anonymous: true
             logout: true
             logout:

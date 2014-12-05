@@ -3,7 +3,7 @@
 namespace Worldskills\CareBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Worldskills\CareBundle\Entity\Subject;
+
 /**
  * SubjectRepository
  *
@@ -33,7 +33,7 @@ class SubjectRepository extends EntityRepository
             ->addSelect('*')
             ->addSelect('MATCH(s.title) AGAINST (:keywords IN NATURAL LANGUAGE MODE) AS score')
             ->from('subject', 's')
-//            ->where('score > 0')
+//                 ->where('score > 0')
             ->setParameter('keywords', $keywords)
             ->setMaxResults($limit)
             ->orderBy('score', 'DESC');
